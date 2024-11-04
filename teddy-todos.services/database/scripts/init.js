@@ -15,6 +15,7 @@ db.todos.createIndex({ userId: 1 })
 
 // insert data: ----------------------------------------------------------------
 
+// users
 db.users.insertMany([
     {
         name: "admin",
@@ -24,24 +25,57 @@ db.users.insertMany([
     },
     {
         name: "test",
-        email: "test.cirak@teddytodos.com",
+        email: "test@teddytodos.com",
         hashedPassword: "your_hashed_password",
         role: "user",
     },
 ])
 
+// histories
+db.histories.insertMany([
+    {
+        userId: db.users.findOne({ email: "test@teddytodos.com" })._id,
+        action: "create",
+        description: "admin created the admin user",
+    },
+    {
+        userId: db.users.findOne({ email: "test@teddytodos.com" })._id,
+        action: "create",
+        description: "user created the test user",
+    },
+])
+
+// notifications
+db.notifications.insertMany([
+    {
+        userId: db.users.findOne({ email: "test@teddytodos.com" })._id,
+        title: "welcome",
+        message: "welcome to teddy todos",
+        status: "unread",
+    },
+    {
+        userId: db.users.findOne({ email: "test@teddytodos.com" })._id,
+        title: "approaching deadline",
+        message: "your task is due soon",
+        status: "unread",
+    },
+])
+
+// todos
 db.todos.insertMany([
     {
         title: "water the plants",
         description: "water the plants in the garden",
         status: "active",
         userId: db.users.findOne({ email: "admin@teddytodos.com" })._id,
+        dueDate: new Date("2024-12-31T23:59:59"),
     },
     {
         title: "buy milk",
         description: "buy milk from the market",
         status: "active",
         userId: db.users.findOne({ email: "admin@teddytodos.com" })._id,
+        dueDate: new Date("2024-12-31T23:59:59"),
     },
 ])
 
