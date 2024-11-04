@@ -6,7 +6,7 @@ import { create } from "zustand"
 import { User } from "../types/user"
 
 // grpc
-import { LoginRequest, LoginResponse } from '../protos/generated/user_pb';
+import {LoginRequest,LoginResponse} from '../protos/generated/user_pb';
 import client from '../tools/user.grpc.client'
 
 interface useUserState {

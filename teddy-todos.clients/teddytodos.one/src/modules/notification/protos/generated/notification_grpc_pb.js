@@ -4,6 +4,28 @@
 var grpc = require('grpc');
 var notification_pb = require('./notification_pb.js');
 
+function serialize_teddy_todos_notification_GetNotificationRequest(arg) {
+  if (!(arg instanceof notification_pb.GetNotificationRequest)) {
+    throw new Error('Expected argument of type teddy.todos.notification.GetNotificationRequest');
+  }
+  return Buffer.from(arg.serializeBinary());
+}
+
+function deserialize_teddy_todos_notification_GetNotificationRequest(buffer_arg) {
+  return notification_pb.GetNotificationRequest.deserializeBinary(new Uint8Array(buffer_arg));
+}
+
+function serialize_teddy_todos_notification_GetNotificationResponse(arg) {
+  if (!(arg instanceof notification_pb.GetNotificationResponse)) {
+    throw new Error('Expected argument of type teddy.todos.notification.GetNotificationResponse');
+  }
+  return Buffer.from(arg.serializeBinary());
+}
+
+function deserialize_teddy_todos_notification_GetNotificationResponse(buffer_arg) {
+  return notification_pb.GetNotificationResponse.deserializeBinary(new Uint8Array(buffer_arg));
+}
+
 function serialize_teddy_todos_notification_GetNotificationsRequest(arg) {
   if (!(arg instanceof notification_pb.GetNotificationsRequest)) {
     throw new Error('Expected argument of type teddy.todos.notification.GetNotificationsRequest');
@@ -37,28 +59,6 @@ function deserialize_teddy_todos_notification_Notification(buffer_arg) {
   return notification_pb.Notification.deserializeBinary(new Uint8Array(buffer_arg));
 }
 
-function serialize_teddy_todos_notification_NotificationRequest(arg) {
-  if (!(arg instanceof notification_pb.NotificationRequest)) {
-    throw new Error('Expected argument of type teddy.todos.notification.NotificationRequest');
-  }
-  return Buffer.from(arg.serializeBinary());
-}
-
-function deserialize_teddy_todos_notification_NotificationRequest(buffer_arg) {
-  return notification_pb.NotificationRequest.deserializeBinary(new Uint8Array(buffer_arg));
-}
-
-function serialize_teddy_todos_notification_NotificationResponse(arg) {
-  if (!(arg instanceof notification_pb.NotificationResponse)) {
-    throw new Error('Expected argument of type teddy.todos.notification.NotificationResponse');
-  }
-  return Buffer.from(arg.serializeBinary());
-}
-
-function deserialize_teddy_todos_notification_NotificationResponse(buffer_arg) {
-  return notification_pb.NotificationResponse.deserializeBinary(new Uint8Array(buffer_arg));
-}
-
 function serialize_teddy_todos_notification_SetReadRequest(arg) {
   if (!(arg instanceof notification_pb.SetReadRequest)) {
     throw new Error('Expected argument of type teddy.todos.notification.SetReadRequest');
@@ -77,12 +77,12 @@ var NotificationServiceService = exports.NotificationServiceService = {
     path: '/teddy.todos.notification.NotificationService/SubscribeToNotifications',
     requestStream: false,
     responseStream: true,
-    requestType: notification_pb.NotificationRequest,
-    responseType: notification_pb.NotificationResponse,
-    requestSerialize: serialize_teddy_todos_notification_NotificationRequest,
-    requestDeserialize: deserialize_teddy_todos_notification_NotificationRequest,
-    responseSerialize: serialize_teddy_todos_notification_NotificationResponse,
-    responseDeserialize: deserialize_teddy_todos_notification_NotificationResponse,
+    requestType: notification_pb.GetNotificationRequest,
+    responseType: notification_pb.GetNotificationResponse,
+    requestSerialize: serialize_teddy_todos_notification_GetNotificationRequest,
+    requestDeserialize: deserialize_teddy_todos_notification_GetNotificationRequest,
+    responseSerialize: serialize_teddy_todos_notification_GetNotificationResponse,
+    responseDeserialize: deserialize_teddy_todos_notification_GetNotificationResponse,
   },
   getNotifications: {
     path: '/teddy.todos.notification.NotificationService/GetNotifications',
