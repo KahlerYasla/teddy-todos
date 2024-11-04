@@ -3,6 +3,38 @@
 
 import * as jspb from "google-protobuf";
 
+export class History extends jspb.Message {
+  getId(): string;
+  setId(value: string): void;
+
+  getTitle(): string;
+  setTitle(value: string): void;
+
+  getAction(): string;
+  setAction(value: string): void;
+
+  getCreatedat(): string;
+  setCreatedat(value: string): void;
+
+  serializeBinary(): Uint8Array;
+  toObject(includeInstance?: boolean): History.AsObject;
+  static toObject(includeInstance: boolean, msg: History): History.AsObject;
+  static extensions: {[key: number]: jspb.ExtensionFieldInfo<jspb.Message>};
+  static extensionsBinary: {[key: number]: jspb.ExtensionFieldBinaryInfo<jspb.Message>};
+  static serializeBinaryToWriter(message: History, writer: jspb.BinaryWriter): void;
+  static deserializeBinary(bytes: Uint8Array): History;
+  static deserializeBinaryFromReader(message: History, reader: jspb.BinaryReader): History;
+}
+
+export namespace History {
+  export type AsObject = {
+    id: string,
+    title: string,
+    action: string,
+    createdat: string,
+  }
+}
+
 export class GetHistoryRequest extends jspb.Message {
   getUserid(): string;
   setUserid(value: string): void;
@@ -24,17 +56,10 @@ export namespace GetHistoryRequest {
 }
 
 export class GetHistoryResponse extends jspb.Message {
-  getId(): string;
-  setId(value: string): void;
-
-  getUserid(): string;
-  setUserid(value: string): void;
-
-  getAction(): string;
-  setAction(value: string): void;
-
-  getCreatedat(): string;
-  setCreatedat(value: string): void;
+  hasHistory(): boolean;
+  clearHistory(): void;
+  getHistory(): History | undefined;
+  setHistory(value?: History): void;
 
   serializeBinary(): Uint8Array;
   toObject(includeInstance?: boolean): GetHistoryResponse.AsObject;
@@ -48,10 +73,7 @@ export class GetHistoryResponse extends jspb.Message {
 
 export namespace GetHistoryResponse {
   export type AsObject = {
-    id: string,
-    userid: string,
-    action: string,
-    createdat: string,
+    history?: History.AsObject,
   }
 }
 
@@ -76,22 +98,10 @@ export namespace GetHistoriesRequest {
 }
 
 export class GetHistoriesResponse extends jspb.Message {
-  getId(): string;
-  setId(value: string): void;
-
-  getUserid(): string;
-  setUserid(value: string): void;
-
-  getAction(): string;
-  setAction(value: string): void;
-
-  getCreatedat(): string;
-  setCreatedat(value: string): void;
-
   clearHistoriesList(): void;
-  getHistoriesList(): Array<GetHistoriesResponse>;
-  setHistoriesList(value: Array<GetHistoriesResponse>): void;
-  addHistories(value?: GetHistoriesResponse, index?: number): GetHistoriesResponse;
+  getHistoriesList(): Array<History>;
+  setHistoriesList(value: Array<History>): void;
+  addHistories(value?: History, index?: number): History;
 
   serializeBinary(): Uint8Array;
   toObject(includeInstance?: boolean): GetHistoriesResponse.AsObject;
@@ -105,11 +115,7 @@ export class GetHistoriesResponse extends jspb.Message {
 
 export namespace GetHistoriesResponse {
   export type AsObject = {
-    id: string,
-    userid: string,
-    action: string,
-    createdat: string,
-    historiesList: Array<GetHistoriesResponse.AsObject>,
+    historiesList: Array<History.AsObject>,
   }
 }
 
@@ -138,17 +144,10 @@ export namespace PutHistoryRequest {
 }
 
 export class PutHistoryResponse extends jspb.Message {
-  getId(): string;
-  setId(value: string): void;
-
-  getUserid(): string;
-  setUserid(value: string): void;
-
-  getAction(): string;
-  setAction(value: string): void;
-
-  getCreatedat(): string;
-  setCreatedat(value: string): void;
+  hasHistory(): boolean;
+  clearHistory(): void;
+  getHistory(): History | undefined;
+  setHistory(value?: History): void;
 
   serializeBinary(): Uint8Array;
   toObject(includeInstance?: boolean): PutHistoryResponse.AsObject;
@@ -162,10 +161,7 @@ export class PutHistoryResponse extends jspb.Message {
 
 export namespace PutHistoryResponse {
   export type AsObject = {
-    id: string,
-    userid: string,
-    action: string,
-    createdat: string,
+    history?: History.AsObject,
   }
 }
 

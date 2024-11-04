@@ -6,7 +6,8 @@ interface AuthServiceClientInterface {
 }
 
 const client = (() => {
-    const url = process.env.REACT_APP_API_URL || "localhost:80500"
+    const url =
+        (process.env.REACT_APP_API_URL || "localhost:80500/api/") + "auth"
     const client = new AuthServiceClient(url, grpc.credentials.createInsecure())
     return client as AuthServiceClientInterface
 })()

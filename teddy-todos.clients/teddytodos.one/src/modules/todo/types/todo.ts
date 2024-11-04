@@ -1,7 +1,8 @@
 type Todo = {
     id: number
     title: string
-    completed: boolean
+    description: string
+    isCompleted: boolean
     dueDate: Date
 }
 
