@@ -1,11 +1,18 @@
 import { BrowserRouter, Route } from "react-router-dom"
+
 import NotFound from "./NotFound"
+
+// modules
+import { AuthContainer } from "../modules/auth"
 
 interface AppProps {
     className?: string
 }
 
 const App: React.FC<AppProps> = ({ className }) => {
+    // set axios base url
+    axios.defaults.baseURL = "http://localhost:8500/api"
+
     return (
         <BrowserRouter>
             <Route path="/" Component={TodoContainer} />

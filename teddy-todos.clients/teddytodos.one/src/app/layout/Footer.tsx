@@ -5,7 +5,15 @@ interface FooterProps {
 const Footer: React.FC<FooterProps> = ({ className }) => {
     return (
         <div className={className}>
-            <h1>Footer</h1>
+            <h1>
+                teddytodos.one by{" "}
+                <a
+                    href="https://github.com/kahleryasla/teddy-todos"
+                    className="text-primary"
+                >
+                    kahleryasla
+                </a>
+            </h1>
         </div>
     )
 }
