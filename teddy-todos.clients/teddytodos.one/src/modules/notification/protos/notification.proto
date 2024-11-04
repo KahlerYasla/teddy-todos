@@ -1,0 +1,17 @@
+syntax = "proto3";
+
+package teddy.todos.notification;
+  
+// messages: --------------------------------------------------------------------
+message NotificationRequest {
+    string user_id = 1;  // Identify the user subscribing to notifications
+}
+  
+message NotificationResponse {
+    string message = 1;   // Notification message
+}
+
+// services: --------------------------------------------------------------------
+service NotificationService {
+    rpc SubscribeToNotifications(NotificationRequest) returns (stream NotificationResponse);
+  }

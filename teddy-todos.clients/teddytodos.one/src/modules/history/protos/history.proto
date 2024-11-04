@@ -1,0 +1,47 @@
+syntax = "proto3";
+
+package teddy.todos.history;
+
+// messages: --------------------------------------------------------------------
+message GetHistoryRequest {
+  string userId = 1;
+}
+
+message GetHistoryResponse {
+    string id = 1;
+    string userId = 2;
+    string action = 3;
+    string createdAt = 4;
+}
+
+message GetHistoriesRequest {
+    string userId = 1;
+}
+
+message GetHistoriesResponse {
+    string id = 1;
+    string userId = 2;
+    string action = 3;
+    string createdAt = 4;
+    
+    repeated GetHistoriesResponse histories = 5;
+}
+
+message PutHistoryRequest {
+    string userId = 1;
+    string action = 2;
+}
+
+message PutHistoryResponse {
+    string id = 1;
+    string userId = 2;
+    string action = 3;
+    string createdAt = 4;
+}
+
+// services: --------------------------------------------------------------------
+service HistoryService {
+  rpc GetHistory(GetHistoryRequest) returns (GetHistoryResponse);
+  rpc GetHistories(GetHistoriesRequest) returns (GetHistoriesResponse);
+  rpc PutHistory(PutHistoryRequest) returns (PutHistoryResponse);
+}
