@@ -2,7 +2,7 @@ syntax = "proto3";
 
 package history;
 
-option go_package = ".";
+option go_package = "./history";
 
 // types: -----------------------------------------------------------------------
 message History {

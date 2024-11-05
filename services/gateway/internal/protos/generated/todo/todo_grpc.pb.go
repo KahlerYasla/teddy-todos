@@ -4,7 +4,7 @@
 // - protoc             v5.28.3
 // source: todo.proto
 
-package __
+package todo
 
 import (
 	context "context"

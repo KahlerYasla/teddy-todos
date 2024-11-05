@@ -4,7 +4,7 @@
 // - protoc             v5.28.3
 // source: history.proto
 
-package __
+package history
 
 import (
 	context "context"

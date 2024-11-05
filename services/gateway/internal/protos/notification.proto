@@ -2,7 +2,7 @@ syntax = "proto3";
 
 package notification;
 
-option go_package = ".";
+option go_package = "./notification";
 
 // types: -----------------------------------------------------------------------
 message Notification {

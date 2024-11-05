@@ -13,9 +13,9 @@ if [[ ! -d "$PROTO_DIR" ]]; then
 fi
 
 # Generate gRPC code
-protoc -I="$PROTO_DIR" \
-    --go_out="$PROTO_DIR/generated" \
+protoc --go_out="$PROTO_DIR/generated" \
     --go-grpc_out="$PROTO_DIR/generated" \
+    --proto_path="$PROTO_DIR"/ \
     "$PROTO_DIR"/*.proto
 
 if [ $? -ne 0 ]; then
