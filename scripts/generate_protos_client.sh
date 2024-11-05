@@ -5,10 +5,10 @@ read -p "Enter module name: " MODULE_NAME
 read -p "Enter proto file name (no extension): " PROTO_FILE_NAME
 
 # Define paths
-OUT_DIR=../src/modules/$MODULE_NAME/protos/generated
-PROTO_DIR=../src/modules/$MODULE_NAME/protos
+OUT_DIR=clients/teddytodos.one/src/modules/$MODULE_NAME/protos/generated
+PROTO_DIR=clients/teddytodos.one/src/modules/$MODULE_NAME/protos
 PROTO_FILE=$PROTO_DIR/$PROTO_FILE_NAME.proto
-BIN_DIR=../node_modules/.bin
+BIN_DIR=clients/teddytodos.one/node_modules/.bin
 
 # Check if output directory exists, if not, create it
 mkdir -p $OUT_DIR
