@@ -7,16 +7,12 @@ message Notification {
     string id = 1;
     string message = 2;
     string type = 3;
-    string isRead = 4;
+    bool isRead = 4;
 }
   
 // messages: --------------------------------------------------------------------
-message NotificationRequest {
-    string userId = 1;  // Identify the user subscribing to notifications
-}
-  
-message NotificationResponse {
-    Notification notification = 1;
+message SubscribeToNotificationsRequest {
+    string userId = 1; 
 }
 
 message GetNotificationsRequest {
@@ -24,16 +20,17 @@ message GetNotificationsRequest {
 }
 
 message GetNotificationsResponse {
-    repeated Notification notifications = 5;
+    repeated Notification notifications = 1;
 }
 
 message SetReadRequest {
-    string id = 2;
+    string id = 1;
+    bool isRead = 2;
 }
 
 // services: --------------------------------------------------------------------
 service NotificationService {
-    rpc SubscribeToNotifications(NotificationRequest) returns (stream NotificationResponse);
+    rpc SubscribeToNotifications(SubscribeToNotificationsRequest) returns (stream Notification);
     rpc GetNotifications(GetNotificationsRequest) returns (GetNotificationsResponse);
     rpc SetRead(SetReadRequest) returns (Notification);
   }
