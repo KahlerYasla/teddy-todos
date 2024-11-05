@@ -1,5 +1,3 @@
-import * as grpc from "@grpc/grpc-js"
-
 import { create } from "zustand"
 
 // types
@@ -36,46 +34,46 @@ interface NotificationState {
     setRead: (id: string) => void
 }
 
-export const useNotifications = create<NotificationState>((set) => ({
+export const useNotifications = create<NotificationState>((set, get) => ({
     notifications: [],
-    getNotifications: async () => {
+    getNotifications: () => {
         const request = new GetNotificationsRequest()
-        client.getNotifications(request, (error, response) => {
-            if (error) {
-                console.error("Error fetching notifications:", error)
-                return
+        client.getNotifications(
+            request,
+            {},
+            (err, response: GetNotificationsResponse) => {
+                if (err) {
+                    console.error("Error getting notifications:", err)
+                    return
+                }
+
+                const notifications = response
+                    .getNotificationsList()
+                    .map((notification) => {
+                        return {
+                            id: notification.getId(),
+                            message: notification.getMessage(),
+                            createdAt: new Date(),
+                            isRead: notification.getIsread(),
+                            type: notification.getType(),
+                        } as Notification
+                    })
+
+                set({ notifications })
             }
-
-            const notifications = response.getNotificationsList().map(
-                (n) =>
-                    ({
-                        id: n.getId(),
-                        message: n.getMessage(),
-                        type: n.getType(),
-                        isRead: n.getIsread(),
-                        createdAt: new Date(),
-                    } as Notification)
-            )
-
-            set({ notifications: notifications })
-        })
+        )
     },
     setRead: (id) => {
         const request = new SetReadRequest()
         request.setId(id)
-        request.setIsread(true)
 
-        client.setRead(request, (error) => {
-            if (error) {
-                console.error("Error setting notification as read:", error)
+        client.setRead(request, {}, (err, response) => {
+            if (err) {
+                console.error("Error setting notification as read:", err)
                 return
             }
 
-            set((state) => ({
-                notifications: state.notifications.map((n) =>
-                    n.id === id ? { ...n, isRead: true } : n
-                ),
-            }))
+            console.log("Notification set as read:", response.toObject())
         })
     },
 }))

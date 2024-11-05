@@ -23,7 +23,7 @@ interface HistoryState {
     putHistory: (history: History) => Promise<void>
 }
 
-const useHistory = create<HistoryState>((set) => ({
+export const useHistory = create<HistoryState>((set, get) => ({
     histories: [],
     getHistories: async () => {
         const request = new GetHistoriesRequest()
@@ -37,7 +37,18 @@ const useHistory = create<HistoryState>((set) => ({
                     console.error(error)
                     return
                 }
-                set({ histories: response.getHistoriesList() })
+
+                const histories = response.getHistoriesList().map(
+                    (history) =>
+                        ({
+                            id: history.getId(),
+                            title: history.getAction(),
+                            description: history.getAction(),
+                            action: history.getAction(),
+                        } as History)
+                )
+
+                set({ histories: histories })
             }
         )
     },
@@ -51,7 +62,20 @@ const useHistory = create<HistoryState>((set) => ({
                     console.error(error)
                     return
                 }
-                set({ histories: [response.getHistory()] })
+
+                const history = response.getHistory()!
+
+                set({
+                    histories: [
+                        ...get().histories,
+                        {
+                            id: history.getId(),
+                            title: history.getAction(),
+                            description: history.getAction(),
+                            action: history.getAction(),
+                        },
+                    ],
+                })
             }
         )
     },
@@ -66,7 +90,18 @@ const useHistory = create<HistoryState>((set) => ({
                     console.error(error)
                     return
                 }
-                set({ histories: [response.getHistory()] })
+
+                set({
+                    histories: [
+                        ...get().histories,
+                        {
+                            id: history.id,
+                            title: history.action,
+                            description: history.action,
+                            action: history.action,
+                        },
+                    ],
+                })
             }
         )
     },

@@ -10,6 +10,7 @@ const TodoContainer: React.FC<TodoContainerProps> = ({ className }) => {
 
     return (
         <div className={` ${className}`}>
+            <h1>Todo List</h1>
             {todoList.map((todo) => (
                 <TodoCard key={todo.id} todo={todo} />
             ))}

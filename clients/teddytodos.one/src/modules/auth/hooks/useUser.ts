@@ -7,7 +7,7 @@ import { User } from "../types/user"
 
 // grpc
 import { LoginRequest, LoginResponse } from "../protos/generated/user_pb"
-import client from "../tools/user.grpc.client"
+import { client } from "../tools/user.grpc.client"
 
 interface useUserState {
     user: User | null
@@ -26,16 +26,13 @@ export const useUser = create<useUserState>((set, get) => ({
     setUser: (user) => set({ user }),
     login: async (request: LoginRequest) => {
         const response = await new Promise<LoginResponse>((resolve, reject) => {
-            client.login(
-                request,
-                (err: grpc.ServiceError | null, response: LoginResponse) => {
-                    if (err) {
-                        reject(err)
-                    } else {
-                        resolve(response)
-                    }
+            client.login(request, {}, (err, response: LoginResponse) => {
+                if (err) {
+                    reject(err)
+                } else {
+                    resolve(response)
                 }
-            )
+            })
         })
 
         const user = {

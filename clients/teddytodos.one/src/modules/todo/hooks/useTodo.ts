@@ -7,13 +7,14 @@ import Todo from "../types/todo"
 import { useUser } from "../../auth/hooks/useUser"
 
 // grpc
-import client from "../tools/todo.grpc.client"
 import {
     GetTodosRequest,
     GetTodoRequest,
     PutTodoRequest,
     SetIsCompletedRequest,
+    GetTodoResponse,
 } from "../protos/generated/todo_pb"
+import { client } from "../tools/todo.grpc.client"
 
 interface TodoState {
     todos: Todo[]
@@ -27,9 +28,9 @@ export const useTodo = create<TodoState>((set) => ({
     todos: [],
     getTodos: async () => {
         const request = new GetTodosRequest()
-        const user = useUser((state) => state.user)
+        const user = useUser.getState().user
         request.setUserid(user?.id || "")
-        client.getTodos(request, (error, response) => {
+        client.getTodos(request, {}, (error, response) => {
             if (error) {
                 console.error(error)
                 return
@@ -45,7 +46,7 @@ export const useTodo = create<TodoState>((set) => ({
     getTodo: async (id: string) => {
         const request = new GetTodoRequest()
         request.setId(id)
-        client.getTodo(request, (error, response) => {
+        client.getTodo(request, {}, (error, response: GetTodoResponse) => {
             if (error) {
                 console.error(error)
                 return
@@ -63,7 +64,7 @@ export const useTodo = create<TodoState>((set) => ({
         request.setDuedate(todo.dueDate.toISOString())
         request.setTitle(todo.title)
 
-        client.putTodo(request, (error, response) => {
+        client.putTodo(request, {}, (error, _) => {
             if (error) {
                 console.error(error)
                 return
@@ -80,7 +81,7 @@ export const useTodo = create<TodoState>((set) => ({
         const request = new SetIsCompletedRequest()
         request.setId(id)
         request.setIscompleted(isCompleted)
-        client.setIsCompleted(request, (error, response) => {
+        client.setIsCompleted(request, {}, (error, _) => {
             if (error) {
                 console.error(error)
                 return

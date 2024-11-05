@@ -14,11 +14,9 @@ BIN_DIR=../clients/teddytodos.one/node_modules/.bin
 mkdir -p $OUT_DIR
 
 # Generate TypeScript definitions and gRPC client code
-npx protoc --proto_path=$PROTO_DIR \
-    --plugin=protoc-gen-ts=$BIN_DIR/protoc-gen-ts \
-    --ts_out=$OUT_DIR \
-    --grpc_out=$OUT_DIR \
-    --plugin=protoc-gen-grpc=$BIN_DIR/grpc_tools_node_protoc_plugin \
+protoc -I $PROTO_DIR \
+    --grpc-web_out=import_style=typescript,mode=grpcwebtext:$OUT_DIR \
+    --js_out=import_style=commonjs,binary:$OUT_DIR \
     $PROTO_FILE
 
 if [ $? -ne 0 ]; then

@@ -1,20 +1,17 @@
-// package: teddy.todos.auth
-// file: user.proto
+import * as jspb from 'google-protobuf'
 
-import * as jspb from "google-protobuf";
+
 
 export class LoginRequest extends jspb.Message {
   getEmail(): string;
-  setEmail(value: string): void;
+  setEmail(value: string): LoginRequest;
 
   getPassword(): string;
-  setPassword(value: string): void;
+  setPassword(value: string): LoginRequest;
 
   serializeBinary(): Uint8Array;
   toObject(includeInstance?: boolean): LoginRequest.AsObject;
   static toObject(includeInstance: boolean, msg: LoginRequest): LoginRequest.AsObject;
-  static extensions: {[key: number]: jspb.ExtensionFieldInfo<jspb.Message>};
-  static extensionsBinary: {[key: number]: jspb.ExtensionFieldBinaryInfo<jspb.Message>};
   static serializeBinaryToWriter(message: LoginRequest, writer: jspb.BinaryWriter): void;
   static deserializeBinary(bytes: Uint8Array): LoginRequest;
   static deserializeBinaryFromReader(message: LoginRequest, reader: jspb.BinaryReader): LoginRequest;
@@ -29,25 +26,23 @@ export namespace LoginRequest {
 
 export class LoginResponse extends jspb.Message {
   getId(): string;
-  setId(value: string): void;
+  setId(value: string): LoginResponse;
 
   getEmail(): string;
-  setEmail(value: string): void;
+  setEmail(value: string): LoginResponse;
 
   getUsername(): string;
-  setUsername(value: string): void;
+  setUsername(value: string): LoginResponse;
 
   getToken(): string;
-  setToken(value: string): void;
+  setToken(value: string): LoginResponse;
 
   getRole(): string;
-  setRole(value: string): void;
+  setRole(value: string): LoginResponse;
 
   serializeBinary(): Uint8Array;
   toObject(includeInstance?: boolean): LoginResponse.AsObject;
   static toObject(includeInstance: boolean, msg: LoginResponse): LoginResponse.AsObject;
-  static extensions: {[key: number]: jspb.ExtensionFieldInfo<jspb.Message>};
-  static extensionsBinary: {[key: number]: jspb.ExtensionFieldBinaryInfo<jspb.Message>};
   static serializeBinaryToWriter(message: LoginResponse, writer: jspb.BinaryWriter): void;
   static deserializeBinary(bytes: Uint8Array): LoginResponse;
   static deserializeBinaryFromReader(message: LoginResponse, reader: jspb.BinaryReader): LoginResponse;
