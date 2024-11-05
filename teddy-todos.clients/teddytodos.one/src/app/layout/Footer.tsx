@@ -4,7 +4,7 @@ interface FooterProps {
 
 const Footer: React.FC<FooterProps> = ({ className }) => {
     return (
-        <div className={className}>
+        <div className={` ${className}`}>
             <h1>
                 teddytodos.one by{" "}
                 <a

@@ -1,6 +1,7 @@
 import { BrowserRouter, Route } from "react-router-dom"
 
-import NotFound from "./NotFound"
+// routes
+import NotFound from "./routes/404"
 
 // modules
 import { AuthContainer } from "../modules/auth"

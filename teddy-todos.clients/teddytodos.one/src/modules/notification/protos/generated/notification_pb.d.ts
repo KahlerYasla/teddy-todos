@@ -35,45 +35,23 @@ export namespace Notification {
   }
 }
 
-export class GetNotificationRequest extends jspb.Message {
+export class SubscribeToNotificationsRequest extends jspb.Message {
   getUserid(): string;
   setUserid(value: string): void;
 
   serializeBinary(): Uint8Array;
-  toObject(includeInstance?: boolean): GetNotificationRequest.AsObject;
-  static toObject(includeInstance: boolean, msg: GetNotificationRequest): GetNotificationRequest.AsObject;
+  toObject(includeInstance?: boolean): SubscribeToNotificationsRequest.AsObject;
+  static toObject(includeInstance: boolean, msg: SubscribeToNotificationsRequest): SubscribeToNotificationsRequest.AsObject;
   static extensions: {[key: number]: jspb.ExtensionFieldInfo<jspb.Message>};
   static extensionsBinary: {[key: number]: jspb.ExtensionFieldBinaryInfo<jspb.Message>};
-  static serializeBinaryToWriter(message: GetNotificationRequest, writer: jspb.BinaryWriter): void;
-  static deserializeBinary(bytes: Uint8Array): GetNotificationRequest;
-  static deserializeBinaryFromReader(message: GetNotificationRequest, reader: jspb.BinaryReader): GetNotificationRequest;
+  static serializeBinaryToWriter(message: SubscribeToNotificationsRequest, writer: jspb.BinaryWriter): void;
+  static deserializeBinary(bytes: Uint8Array): SubscribeToNotificationsRequest;
+  static deserializeBinaryFromReader(message: SubscribeToNotificationsRequest, reader: jspb.BinaryReader): SubscribeToNotificationsRequest;
 }
 
-export namespace GetNotificationRequest {
+export namespace SubscribeToNotificationsRequest {
   export type AsObject = {
     userid: string,
-  }
-}
-
-export class GetNotificationResponse extends jspb.Message {
-  hasNotification(): boolean;
-  clearNotification(): void;
-  getNotification(): Notification | undefined;
-  setNotification(value?: Notification): void;
-
-  serializeBinary(): Uint8Array;
-  toObject(includeInstance?: boolean): GetNotificationResponse.AsObject;
-  static toObject(includeInstance: boolean, msg: GetNotificationResponse): GetNotificationResponse.AsObject;
-  static extensions: {[key: number]: jspb.ExtensionFieldInfo<jspb.Message>};
-  static extensionsBinary: {[key: number]: jspb.ExtensionFieldBinaryInfo<jspb.Message>};
-  static serializeBinaryToWriter(message: GetNotificationResponse, writer: jspb.BinaryWriter): void;
-  static deserializeBinary(bytes: Uint8Array): GetNotificationResponse;
-  static deserializeBinaryFromReader(message: GetNotificationResponse, reader: jspb.BinaryReader): GetNotificationResponse;
-}
-
-export namespace GetNotificationResponse {
-  export type AsObject = {
-    notification?: Notification.AsObject,
   }
 }
 
@@ -123,6 +101,9 @@ export class SetReadRequest extends jspb.Message {
   getId(): string;
   setId(value: string): void;
 
+  getIsread(): boolean;
+  setIsread(value: boolean): void;
+
   serializeBinary(): Uint8Array;
   toObject(includeInstance?: boolean): SetReadRequest.AsObject;
   static toObject(includeInstance: boolean, msg: SetReadRequest): SetReadRequest.AsObject;
@@ -136,6 +117,7 @@ export class SetReadRequest extends jspb.Message {
 export namespace SetReadRequest {
   export type AsObject = {
     id: string,
+    isread: boolean,
   }
 }
 

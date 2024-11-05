@@ -7,7 +7,7 @@ message Todo {
     string id = 1;
     string title = 2;
     string description = 3;
-    string isCompleted = 4;
+    bool isCompleted = 4;
     string dueDate = 5;
 }
 
@@ -32,6 +32,7 @@ message PutTodoRequest {
     string title = 1;
     string description = 2;
     string dueDate = 3;
+    bool isCompleted = 4;
 }
 
 message PutTodoResponse {
@@ -40,7 +41,7 @@ message PutTodoResponse {
 
 message SetIsCompletedRequest {
     string id = 1;
-    string isCompleted = 2;
+    bool isCompleted = 2;
 }
 
 // services: --------------------------------------------------------------------

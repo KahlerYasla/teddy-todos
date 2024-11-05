@@ -13,8 +13,8 @@ export class Todo extends jspb.Message {
   getDescription(): string;
   setDescription(value: string): void;
 
-  getIscompleted(): string;
-  setIscompleted(value: string): void;
+  getIscompleted(): boolean;
+  setIscompleted(value: boolean): void;
 
   getDuedate(): string;
   setDuedate(value: string): void;
@@ -34,7 +34,7 @@ export namespace Todo {
     id: string,
     title: string,
     description: string,
-    iscompleted: string,
+    iscompleted: boolean,
     duedate: string,
   }
 }
@@ -133,6 +133,9 @@ export class PutTodoRequest extends jspb.Message {
   getDuedate(): string;
   setDuedate(value: string): void;
 
+  getIscompleted(): boolean;
+  setIscompleted(value: boolean): void;
+
   serializeBinary(): Uint8Array;
   toObject(includeInstance?: boolean): PutTodoRequest.AsObject;
   static toObject(includeInstance: boolean, msg: PutTodoRequest): PutTodoRequest.AsObject;
@@ -148,6 +151,7 @@ export namespace PutTodoRequest {
     title: string,
     description: string,
     duedate: string,
+    iscompleted: boolean,
   }
 }
 
@@ -175,8 +179,8 @@ export class SetIsCompletedRequest extends jspb.Message {
   getId(): string;
   setId(value: string): void;
 
-  getIscompleted(): string;
-  setIscompleted(value: string): void;
+  getIscompleted(): boolean;
+  setIscompleted(value: boolean): void;
 
   serializeBinary(): Uint8Array;
   toObject(includeInstance?: boolean): SetIsCompletedRequest.AsObject;
@@ -191,7 +195,7 @@ export class SetIsCompletedRequest extends jspb.Message {
 export namespace SetIsCompletedRequest {
   export type AsObject = {
     id: string,
-    iscompleted: string,
+    iscompleted: boolean,
   }
 }
 

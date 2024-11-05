@@ -30,7 +30,7 @@ const AuthForm: React.FC<AuthFormProps> = ({ className }) => {
     }
 
     return (
-        <form className={className} onSubmit={handleSubmit(onSubmit)}>
+        <form className={` ${className}`} onSubmit={handleSubmit(onSubmit)}>
             <div>
                 <label htmlFor="email">Email</label>
                 <input

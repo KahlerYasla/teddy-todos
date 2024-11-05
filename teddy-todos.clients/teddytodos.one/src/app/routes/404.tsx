@@ -4,7 +4,7 @@ interface NotFoundProps {
 
 const NotFound: React.FC<NotFoundProps> = ({ className }) => {
     return (
-        <div className={className}>
+        <div className={` ${className}`}>
             <h1>404</h1>
             <p>Not Found</p>
         </div>

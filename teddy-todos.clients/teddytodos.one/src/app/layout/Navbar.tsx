@@ -4,7 +4,7 @@ interface NavbarProps {
 
 const Navbar: React.FC<NavbarProps> = ({ className }) => {
     return (
-        <div className={className}>
+        <div className={` ${className}`}>
             <h1>Navbar</h1>
         </div>
     )

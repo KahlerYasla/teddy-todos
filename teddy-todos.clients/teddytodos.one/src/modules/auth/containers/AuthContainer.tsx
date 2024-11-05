@@ -6,7 +6,7 @@ interface AuthContainerProps {
 
 const AuthContainer: React.FC<AuthContainerProps> = ({ className }) => {
     return (
-        <div className={className}>
+        <div className={` ${className}`}>
             <AuthForm />
         </div>
     )

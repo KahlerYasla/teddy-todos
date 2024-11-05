@@ -1,5 +1,5 @@
 type History = {
-    id: number
+    id: string
     title: string
     action: ActionType
     description: string

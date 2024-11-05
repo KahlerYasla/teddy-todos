@@ -3,13 +3,9 @@ import { NotificationServiceClient } from "../protos/generated/notification_grpc
 import * as services from "../protos/generated/notification_pb"
 
 interface NotificationServiceClientInterface {
-    getNotification: (
-        request: services.GetNotificationRequest,
-        callback: (
-            error: grpc.ServiceError | null,
-            response: services.GetNotificationResponse
-        ) => void
-    ) => grpc.ClientUnaryCall
+    subscribeToNotifications: (
+        request: services.SubscribeToNotificationsRequest
+    ) => grpc.ClientReadableStream<services.Notification>
     getNotifications: (
         request: services.GetNotificationsRequest,
         callback: (
@@ -23,7 +19,7 @@ interface NotificationServiceClientInterface {
     ) => grpc.ClientUnaryCall
 }
 
-const client = (() => {
+export const client = (() => {
     const url =
         (process.env.REACT_APP_API_URL || "localhost:80500/api/") +
         "notification"
@@ -35,4 +31,6 @@ const client = (() => {
     return client as NotificationServiceClientInterface
 })()
 
-export default client
+export const stream = client.subscribeToNotifications(
+    new services.SubscribeToNotificationsRequest()
+)
