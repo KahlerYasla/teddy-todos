@@ -1,6 +1,8 @@
 syntax = "proto3";
 
-package teddy.todos.notification;
+package notification;
+
+option go_package = ".";
 
 // types: -----------------------------------------------------------------------
 message Notification {

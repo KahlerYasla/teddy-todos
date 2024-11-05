@@ -1,29 +1,26 @@
 #!/bin/bash
 
-# Read proto directory and output directory from user
-read -p "Enter module name: " SERVICE_NAME
-read -p "Enter proto file name (no extension): " PROTO_FILE_NAME
+# Set service name directly for testing (uncomment to read from input)
+# read -p "Enter service name: " SERVICE_NAME
+SERVICE_NAME="gateway"
 
-# Define paths
-OUT_DIR=../services/$SERVICE_NAME/protos/generated
-PROTO_DIR=../services/$SERVICE_NAME/protos
-PROTO_FILE=$PROTO_DIR/$PROTO_FILE_NAME.proto
-BIN_DIR=clients/teddytodos.one/node_modules/.bin
+PROTO_DIR="../services/$SERVICE_NAME/internal/protos"
 
-# Check if output directory exists, if not, create it
-mkdir -p $OUT_DIR
-
-# Generate TypeScript definitions and gRPC client code
-npx protoc --proto_path=$PROTO_DIR \
-    --plugin=protoc-gen-ts=$BIN_DIR/protoc-gen-ts \
-    --ts_out=$OUT_DIR \
-    --grpc_out=$OUT_DIR \
-    --plugin=protoc-gen-grpc=$BIN_DIR/grpc_tools_node_protoc_plugin \
-    $PROTO_FILE
-
-if [ $? -ne 0 ]; then
-    echo "🚩 error generating TypeScript definitions and gRPC client"
+# Check if the proto directory exists
+if [[ ! -d "$PROTO_DIR" ]]; then
+    echo "🚩 error: Directory $PROTO_DIR does not exist"
     exit 1
 fi
 
-echo "🍀 ts definitions & gRPC client generated in $OUT_DIR"
+# Generate gRPC code
+protoc -I="$PROTO_DIR" \
+    --go_out="$PROTO_DIR/generated" \
+    --go-grpc_out="$PROTO_DIR/generated" \
+    "$PROTO_DIR"/*.proto
+
+if [ $? -ne 0 ]; then
+    echo "🚩 error generating gRPC server"
+    exit 1
+fi
+
+echo "🍀 RPCs generated successfully"
