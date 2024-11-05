@@ -10,7 +10,7 @@ const config: Config = {
     favicon: "brand/web/favicon.ico",
 
     // Set the production url of your site here
-    url: "https://your-docusaurus-site.example.com",
+    url: "https://docs.teddytodos.one",
     // Set the /<baseUrl>/ pathname under which your site is served
     // For GitHub pages deployment, it is often '/<projectName>/'
     baseUrl: "/",
@@ -79,6 +79,7 @@ const config: Config = {
         mermaid: true,
     },
     themes: ["@docusaurus/theme-mermaid"],
+    trailingSlash: false,
 }
 
 export default config
