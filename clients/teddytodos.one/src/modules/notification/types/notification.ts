@@ -1,15 +1,9 @@
 type Notification = {
     id: string
     message: string
-    type: NotificationType
+    type: string
     isRead: boolean
     createdAt: Date
 }
 
 export default Notification
-
-export enum NotificationType {
-    REMINDER = "reminder",
-    ERROR = "error",
-    SUCCESS = "success",
-}

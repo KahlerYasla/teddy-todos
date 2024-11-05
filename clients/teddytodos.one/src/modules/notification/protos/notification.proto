@@ -7,7 +7,7 @@ message Notification {
     string id = 1;
     string message = 2;
     string type = 3;
-    string isRead = 4;
+    bool isRead = 4;
 }
   
 // messages: --------------------------------------------------------------------

@@ -1,12 +1,12 @@
 #!/bin/bash
 
 # Read proto directory and output directory from user
-read -p "Enter module name: " MODULE_NAME
+read -p "Enter module name: " SERVICE_NAME
 read -p "Enter proto file name (no extension): " PROTO_FILE_NAME
 
 # Define paths
-OUT_DIR=clients/teddytodos.one/src/modules/$MODULE_NAME/protos/generated
-PROTO_DIR=clients/teddytodos.one/src/modules/$MODULE_NAME/protos
+OUT_DIR=../services/$SERVICE_NAME/protos/generated
+PROTO_DIR=../services/$SERVICE_NAME/protos
 PROTO_FILE=$PROTO_DIR/$PROTO_FILE_NAME.proto
 BIN_DIR=clients/teddytodos.one/node_modules/.bin
 

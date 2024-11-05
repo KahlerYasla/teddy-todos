@@ -13,8 +13,8 @@ export class Notification extends jspb.Message {
   getType(): string;
   setType(value: string): void;
 
-  getIsread(): string;
-  setIsread(value: string): void;
+  getIsread(): boolean;
+  setIsread(value: boolean): void;
 
   serializeBinary(): Uint8Array;
   toObject(includeInstance?: boolean): Notification.AsObject;
@@ -31,7 +31,7 @@ export namespace Notification {
     id: string,
     message: string,
     type: string,
-    isread: string,
+    isread: boolean,
   }
 }
 

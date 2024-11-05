@@ -46,15 +46,18 @@ export const useNotifications = create<NotificationState>((set) => ({
                 return
             }
 
-            const notifications = response.getNotificationsList().map((n) => ({
-                id: n.getId(),
-                message: n.getMessage(),
-                type: n.getType(),
-                isRead: n.getIsread(),
-                createdAt: new Date(),
-            }))
+            const notifications = response.getNotificationsList().map(
+                (n) =>
+                    ({
+                        id: n.getId(),
+                        message: n.getMessage(),
+                        type: n.getType(),
+                        isRead: n.getIsread(),
+                        createdAt: new Date(),
+                    } as Notification)
+            )
 
-            set({ notifications })
+            set({ notifications: notifications })
         })
     },
     setRead: (id) => {
