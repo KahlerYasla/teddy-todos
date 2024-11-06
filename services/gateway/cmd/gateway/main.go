@@ -17,6 +17,7 @@ import (
 	notification "gateway/internal/routers/notification"
 	todo "gateway/internal/routers/todo"
 
+	"github.com/confluentinc/confluent-kafka-go/kafka"
 	"google.golang.org/grpc"
 )
 
@@ -30,11 +31,14 @@ type server struct {
 func main() {
 	lis, err := net.Listen("tcp", ":8500")
 	if err != nil {
-		log.Fatalf("Failed to listen: %v", err)
+		log.Fatalf("failed to listen: %v", err)
 	}
 
 	// create a new grpc server
 	s := grpc.NewServer()
+
+	// initialize kafka
+	kafka.NewConsumer("localhost:9092", "groupID", []string{"topic"})
 
 	// register the services
 	pb_us.RegisterAuthServiceServer(s, &server{})
@@ -43,9 +47,9 @@ func main() {
 	pb_ts.RegisterTodoServiceServer(s, &server{})
 
 	// start the grpc server
-	log.Println("Starting Gateway Server on port 8080...")
+	log.Println("starting gateway on port 8080...")
 	if err := s.Serve(lis); err != nil {
-		log.Fatalf("Failed to start Gateway Server: %v", err)
+		log.Fatalf("failed to start gateway Server: %v", err)
 	}
 }
 

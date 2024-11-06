@@ -12,9 +12,14 @@ type Consumer struct {
 
 func NewConsumer(broker string, groupID string, topics []string) (*Consumer, error) {
 	c, err := kafka.NewConsumer(&kafka.ConfigMap{
-		"bootstrap.servers": broker,
-		"group.id":          groupID,
-		"auto.offset.reset": "earliest",
+		"bootstrap.servers":        broker,     // Kafka brokers
+		"group.id":                 groupID,    // Consumer group ID
+		"auto.offset.reset":        "earliest", // Start at beginning if no offsets are committed
+		"enable.auto.commit":       false,      // Disable auto-commit to manually control commits
+		"session.timeout.ms":       6000,       // Timeout for session expiration
+		"max.poll.interval.ms":     300000,     // Max time between poll calls to prevent rebalancing
+		"enable.partition.eof":     true,       // Notify when the consumer reaches end of a partition
+		"allow.auto.create.topics": false,      // Avoid creating topics accidentally
 	})
 	if err != nil {
 		return nil, err
