@@ -4,7 +4,7 @@
 # read -p "Enter service name: " SERVICE_NAME
 SERVICE_NAME="gateway"
 
-PROTO_DIR="../services/$SERVICE_NAME/internal/protos"
+PROTO_DIR="../services/$SERVICE_NAME/internal/proto"
 
 # Check if the proto directory exists
 if [[ ! -d "$PROTO_DIR" ]]; then

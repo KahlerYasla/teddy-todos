@@ -1,4 +1,4 @@
-package repos
+package repo
 
 import (
 	"context"
@@ -7,7 +7,7 @@ import (
 	"go.mongodb.org/mongo-driver/mongo"
 	"go.mongodb.org/mongo-driver/mongo/options"
 
-	"auth/internal/models"
+	"auth/internal/model"
 )
 
 type UserRepository struct {
@@ -20,8 +20,8 @@ func NewUserRepository(db *mongo.Database, collectionName string) *UserRepositor
 	}
 }
 
-func (r *UserRepository) GetUserById(ctx context.Context, id string) (*models.User, error) {
-	var user models.User
+func (r *UserRepository) GetUserById(ctx context.Context, id string) (*model.User, error) {
+	var user model.User
 	filter := bson.M{"_id": id}
 	err := r.collection.FindOne(ctx, filter).Decode(&user)
 	if err != nil {
@@ -33,8 +33,8 @@ func (r *UserRepository) GetUserById(ctx context.Context, id string) (*models.Us
 	return &user, nil
 }
 
-func (r *UserRepository) GetUserByUsername(ctx context.Context, username string) (*models.User, error) {
-	var user models.User
+func (r *UserRepository) GetUserByUsername(ctx context.Context, username string) (*model.User, error) {
+	var user model.User
 	filter := bson.M{"username": username}
 	err := r.collection.FindOne(ctx, filter).Decode(&user)
 	if err != nil {

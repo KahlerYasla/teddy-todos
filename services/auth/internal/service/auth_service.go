@@ -1,26 +1,26 @@
-package services
+package service
 
 import (
 	// internal
-	"auth/internal/models"
-	"auth/internal/repos"
-	"auth/internal/tools/token"
+	"auth/internal/model"
+	"auth/internal/repo"
+	"auth/pkg/token"
 
 	"context"
 	"errors"
 )
 
 type AuthService struct {
-	userRepo repos.UserRepository
+	userRepo repo.UserRepository
 }
 
-func NewAuthService(userRepo *repos.UserRepository) *AuthService {
+func NewAuthService(userRepo *repo.UserRepository) *AuthService {
 	return &AuthService{
 		userRepo: *userRepo,
 	}
 }
 
-func (s *AuthService) GetUserById(ctx context.Context, userId string) (*models.User, error) {
+func (s *AuthService) GetUserById(ctx context.Context, userId string) (*model.User, error) {
 	user, err := s.userRepo.GetUserById(ctx, userId)
 	if err != nil {
 		return nil, err
@@ -28,7 +28,7 @@ func (s *AuthService) GetUserById(ctx context.Context, userId string) (*models.U
 	return user, nil
 }
 
-func (s *AuthService) EvaluateLogin(ctx context.Context, username, password string) (*models.User, error) {
+func (s *AuthService) EvaluateLogin(ctx context.Context, username, password string) (*model.User, error) {
 	user, err := s.userRepo.GetUserByUsername(ctx, username)
 	if err != nil {
 		return nil, err
