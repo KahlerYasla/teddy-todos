@@ -1,46 +1,74 @@
+// internal/kafka/auth_consumer.go
 package kafka
 
 import (
+	"auth/internal/service"
+	"context"
+	"encoding/json"
 	"log"
 
-	"github.com/confluentinc/confluent-kafka-go/kafka"
+	"github.com/segmentio/kafka-go"
 )
 
-type Consumer struct {
-	kafkaConsumer *kafka.Consumer
+// AuthConsumer listens to Kafka topics for authentication requests
+type AuthConsumer struct {
+	reader      *kafka.Reader
+	authService *service.AuthService
+	producer    *AuthProducer // Adding producer to send responses
 }
 
-func NewConsumer(broker string, groupID string, topics []string) (*Consumer, error) {
-	c, err := kafka.NewConsumer(&kafka.ConfigMap{
-		"bootstrap.servers":        broker,     // Kafka brokers
-		"group.id":                 groupID,    // Consumer group ID
-		"auto.offset.reset":        "earliest", // Start at beginning if no offsets are committed
-		"enable.auto.commit":       false,      // Disable auto-commit to manually control commits
-		"session.timeout.ms":       6000,       // Timeout for session expiration
-		"max.poll.interval.ms":     300000,     // Max time between poll calls to prevent rebalancing
-		"enable.partition.eof":     true,       // Notify when the consumer reaches end of a partition
-		"allow.auto.create.topics": false,      // Avoid creating topics accidentally
+// NewAuthConsumer creates a new AuthConsumer
+func NewAuthConsumer(brokers []string, topic string, authService *service.AuthService, producer *AuthProducer) *AuthConsumer {
+	reader := kafka.NewReader(kafka.ReaderConfig{
+		Brokers: brokers,
+		Topic:   topic,
+		GroupID: "auth-service",
 	})
-	if err != nil {
-		return nil, err
-	}
-
-	err = c.SubscribeTopics(topics, nil)
-	if err != nil {
-		return nil, err
-	}
-
-	return &Consumer{kafkaConsumer: c}, nil
+	return &AuthConsumer{reader: reader, authService: authService, producer: producer}
 }
 
-func (c *Consumer) Consume() {
+// Start listens for messages and processes them
+func (c *AuthConsumer) Start(ctx context.Context) error {
 	for {
-		msg, err := c.kafkaConsumer.ReadMessage(-1)
-		if err == nil {
-			log.Printf("Message on %s: %s\n", msg.TopicPartition, string(msg.Value))
-			// Handle the message (e.g., process login event)
-		} else {
-			log.Printf("Consumer error: %v (%v)\n", err, msg)
+		m, err := c.reader.ReadMessage(ctx)
+		if err != nil {
+			log.Printf("error reading message: %v", err)
+			continue
+		}
+
+		var request map[string]interface{}
+		if err := json.Unmarshal(m.Value, &request); err != nil {
+			log.Printf("error unmarshalling request: %v", err)
+			continue
+		}
+
+		var response map[string]interface{}
+		switch request["type"] {
+		case "EvaluateLogin":
+			username := request["username"].(string)
+			password := request["password"].(string)
+			success, err := c.authService.EvaluateLogin(ctx, username, password)
+			response = map[string]interface{}{
+				"type":    "EvaluateLoginResponse",
+				"success": success,
+				"error":   err,
+			}
+		case "GetUserByID":
+			userID := request["userID"].(string)
+			user, err := c.authService.GetUserByID(ctx, userID)
+			response = map[string]interface{}{
+				"type":  "GetUserByIDResponse",
+				"user":  user,
+				"error": err,
+			}
+		default:
+			log.Printf("unknown request type: %v", request["type"])
+			continue
+		}
+
+		// Send the response to Kafka
+		if err := c.producer.SendResponse(ctx, response); err != nil {
+			log.Printf("error sending response: %v", err)
 		}
 	}
 }

@@ -20,7 +20,7 @@ func NewUserRepository(db *mongo.Database, collectionName string) *UserRepositor
 	}
 }
 
-func (r *UserRepository) GetUserById(ctx context.Context, id string) (*model.User, error) {
+func (r *UserRepository) GetUserByID(ctx context.Context, id string) (*model.User, error) {
 	var user model.User
 	filter := bson.M{"_id": id}
 	err := r.collection.FindOne(ctx, filter).Decode(&user)
@@ -46,7 +46,7 @@ func (r *UserRepository) GetUserByUsername(ctx context.Context, username string)
 	return &user, nil
 }
 
-func (r *UserRepository) GetHashedPasswordByUserId(ctx context.Context, id string) (string, error) {
+func (r *UserRepository) GetHashedPasswordByUserID(ctx context.Context, id string) (string, error) {
 	var result struct {
 		HashedPassword string `bson:"password"`
 	}

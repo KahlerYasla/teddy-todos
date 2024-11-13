@@ -1,45 +1,40 @@
+// internal/kafka/auth_producer.go
 package kafka
 
 import (
+	"context"
+	"encoding/json"
 	"log"
 
-	"github.com/confluentinc/confluent-kafka-go/kafka"
+	"github.com/segmentio/kafka-go"
 )
 
-type Producer struct {
-	kafkaProducer *kafka.Producer
+// AuthProducer sends responses to Kafka
+type AuthProducer struct {
+	writer *kafka.Writer
 }
 
-func NewProducer(broker string) (*Producer, error) {
-	p, err := kafka.NewProducer(&kafka.ConfigMap{"bootstrap.servers": broker})
-	if err != nil {
-		return nil, err
-	}
-	return &Producer{kafkaProducer: p}, nil
+// NewAuthProducer creates a new AuthProducer
+func NewAuthProducer(brokers []string, topic string) *AuthProducer {
+	writer := kafka.NewWriter(kafka.WriterConfig{
+		Brokers: brokers,
+		Topic:   topic,
+	})
+	return &AuthProducer{writer: writer}
 }
 
-func (p *Producer) Produce(topic string, message []byte) {
-	deliveryChan := make(chan kafka.Event)
-
-	err := p.kafkaProducer.Produce(&kafka.Message{
-		TopicPartition: kafka.TopicPartition{Topic: &topic, Partition: kafka.PartitionAny},
-		Value:          message,
-	}, deliveryChan)
-
+// SendResponse sends a response message to Kafka
+func (p *AuthProducer) SendResponse(ctx context.Context, response interface{}) error {
+	value, err := json.Marshal(response)
 	if err != nil {
-		log.Printf("Failed to produce message: %s", err)
+		return err
 	}
 
-	// Wait for delivery report
-	go func() {
-		ev := <-deliveryChan
-		switch e := ev.(type) {
-		case *kafka.Message:
-			if e.TopicPartition.Error != nil {
-				log.Printf("Delivery failed: %v\n", e.TopicPartition.Error)
-			} else {
-				log.Printf("Delivered message to %v\n", e.TopicPartition)
-			}
-		}
-	}()
+	err = p.writer.WriteMessages(ctx, kafka.Message{
+		Value: value,
+	})
+	if err != nil {
+		log.Printf("error sending message: %v", err)
+	}
+	return err
 }

@@ -4,7 +4,7 @@ import (
 	// internal
 	"auth/internal/model"
 	"auth/internal/repo"
-	"auth/pkg/token"
+	"auth/pkg/auth/token"
 
 	"context"
 	"errors"
@@ -20,8 +20,8 @@ func NewAuthService(userRepo *repo.UserRepository) *AuthService {
 	}
 }
 
-func (s *AuthService) GetUserById(ctx context.Context, userId string) (*model.User, error) {
-	user, err := s.userRepo.GetUserById(ctx, userId)
+func (s *AuthService) GetUserByID(ctx context.Context, userId string) (*model.User, error) {
+	user, err := s.userRepo.GetUserByID(ctx, userId)
 	if err != nil {
 		return nil, err
 	}
